@@ -1,6 +1,7 @@
 package com.bootcamp.MS_Savings.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.bootcamp.MS_Savings.Entity.SavingObj;
 import com.bootcamp.MS_Savings.model.Accounts_Relationship;
 import com.bootcamp.MS_Savings.model.Savings;
-import com.bootcamp.MS_Savings.repository.Accounts_RelationshipRepository;
 import com.bootcamp.MS_Savings.repository.SavingRepository;
 
 import reactor.core.publisher.Flux;
@@ -47,6 +47,19 @@ public class SavingServiceImpl implements SavingService{
 		return Obj1.map( r -> r.getAmount());
 		
 	}
+	
+	@Override
+	public Mono<Integer> GetTypeAccount(String pro, String Currency, String Number) {
+		LogJava.info("Inquiry");
+		
+		Mono<Savings> Obj1 = savingRepository.findAll().filter(x -> x.getProduct().equals(pro)
+				&& x.getCurrency().equals(Currency)
+				&& x.getNumber().equals(Number)
+				).next();
+		
+		return Obj1.map( r -> r.getType());
+		
+	}
 
 	@Override
 	public Mono<Savings> AmountUpdate(String pro, String Currency, String Number,double NewAmou) {
@@ -70,16 +83,21 @@ public class SavingServiceImpl implements SavingService{
 	public Mono<Savings> Open(SavingObj Sav) {
 		LogJava.info("Open Saving");
 		
-		//One Saving account condition
-		boolean flg1 = OneSavACond(Sav.getCodTit());
+		boolean flg1;
 		
 		//business condition
-		boolean flg2 = BusiCond(Sav.getCodTit());
+		
+		if (Sav.getTypeCLi()==1) {
+		
+			flg1 = PerCond(Sav.getCodTit());
+		}else {
+			flg1 = BusiCond(Sav.getCodTit());
+		}
 		
 		Savings SavR = Sav.GetSaving();
 		
 		
-		if (flg1 && flg2) {
+		if (flg1) {
 			Flux.fromIterable(Sav.GetRelation()).flatMap(R -> 
 			Flux.concat(accounts_RelationshipService.save(R))).subscribe();
 			
@@ -90,14 +108,27 @@ public class SavingServiceImpl implements SavingService{
 	}
 
 	private boolean BusiCond(List<String> codTit) {
-		return accounts_RelationshipService.BusiCond(codTit);
+		
+		for(String cc: codTit) {
+			//Accounts List
+			Flux<Accounts_Relationship> far = accounts_RelationshipService.GetAccountSav(cc);
+						
+			boolean Bol = far.map(f -> GetTypeAccount(f.getProduct(),f.getCurrency(),f.getNumber()))
+				.filter(x -> x.block()==1 || x.block()==2).collect(Collectors.toSet()).block().size()==2;
+			
+			if (Bol) {
+				return false;
+			}
+		}
+		
+		return true;
+		
+		
 	}
-
-
-	private boolean OneSavACond(List<String> codTit) {
-		return accounts_RelationshipService.OneSavACond(codTit);
+	
+	private boolean PerCond(List<String> codTit) {
+		return accounts_RelationshipService.PerCond(codTit);
 	}
-
 
 	@Override
 	public Mono<Savings> Close(String pro, String Currency, String Number) {

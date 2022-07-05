@@ -21,6 +21,8 @@ public interface SavingService {
 	
 	public Mono<Double> Inquiry(String pro, String Currency, String Number);
 	
+	public Mono<Integer> GetTypeAccount(String pro, String Currency, String Number);
+	
 	public Mono<Savings> AmountUpdate(String pro, String Currency, String Number,double NewAmou);
 	
 	

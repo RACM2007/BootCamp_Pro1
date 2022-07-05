@@ -26,6 +26,8 @@ public class SavingObj {
 	List<String> CodTit;
 	List<String> CodSig;
 	
+	private int typeCLi;
+	
 	public Savings GetSaving() {
 		Savings Sav = new Savings();
 		
