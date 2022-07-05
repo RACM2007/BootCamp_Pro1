@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bootcamp.MS_Savings.service.SavingServiceImpl;
 import com.bootcamp.MS_Transactions.model.Transactions;
 import com.bootcamp.MS_Transactions.repository.TransactionRepository;
 
