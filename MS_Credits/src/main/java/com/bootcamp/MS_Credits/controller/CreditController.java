@@ -17,11 +17,13 @@ public class CreditController {
 
     @GetMapping(value = "/AllCredits")
     public Flux<Credits> AllCredits() {
+        //List all credits
         return creditService.findAll();
     }
 
     @PostMapping(value = "/NewCredit")
     public Mono<Credits> save(@RequestBody Credits credits){
+        //Register new credit
         return creditService.save(credits);
     }
 
@@ -36,11 +38,13 @@ public class CreditController {
                                       @PathVariable("cur")String Currency,
                                       @PathVariable("num") String Number,
                                       @PathVariable("newamou") double NewAmou){
+        //Update Balance
         return creditService.updateBalance(pro, Currency, Number, NewAmou);
     }
 
     @DeleteMapping(value="/Delete/{pro}/{cur}/{num}")
     public Mono<Void> Delete(@PathVariable("pro") String pro, @PathVariable("cur") String cur, @PathVariable("num") String num){
+        //Delete Credit
         return creditService.delete(pro, cur, num);
     }
 
