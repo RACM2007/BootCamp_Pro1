@@ -24,6 +24,18 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Mono<Clients> getClient(String cod) {
+        LogJava.info("Get Clients");
+
+        Mono<Clients> Obj1 = clientRepository.findAll().filter(x -> x.getCodClient().equals(cod)
+        ).next();
+
+        Clients Cli = Obj1.block();
+
+        return clientRepository.findById(Cli.getId());
+    }
+
+    @Override
     public Mono<Clients> save(Clients clients) {
         LogJava.info("Save");
         return clientRepository.save(clients);

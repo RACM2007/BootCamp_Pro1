@@ -21,9 +21,8 @@ public class ClientController {
     }
 
     @GetMapping(value = "/GetClient/{cod}")
-    public Mono<Double> Inquiry(@PathVariable("cod") String cod) {
-        //return clientService(pro, cur, num);
-        return null;
+    public Mono<Clients> Inquiry(@PathVariable("cod") String cod) {
+        return clientService.getClient(cod);
     }
 
     @PostMapping(value = "/NewClient")

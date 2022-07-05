@@ -1,0 +1,17 @@
+[2022-07-04 14:55:33] [ INFO ] [CreditServiceImpl:22] List all Credits
+[2022-07-04 15:52:42] [ INFO ] [CreditServiceImpl:28] Save
+[2022-07-04 15:54:35] [ INFO ] [CreditServiceImpl:28] Save
+[2022-07-04 15:54:54] [ INFO ] [CreditServiceImpl:28] Save
+[2022-07-05 01:20:05] [ INFO ] [CreditServiceImpl:22] List all Credits
+[2022-07-05 01:25:54] [ INFO ] [CreditServiceImpl:34] Inquiry
+[2022-07-05 01:29:43] [ INFO ] [CreditServiceImpl:46] Update Balance
+[2022-07-05 01:33:51] [ INFO ] [CreditServiceImpl:28] Save
+[2022-07-05 01:34:07] [ INFO ] [CreditServiceImpl:22] List all Credits
+[2022-07-05 01:36:15] [ INFO ] [CreditServiceImpl:62] Delete Credit
+[2022-07-05 01:36:24] [ INFO ] [CreditServiceImpl:62] Delete Credit
+[2022-07-05 01:46:24] [ INFO ] [CreditServiceImpl:22] List all Credits
+[2022-07-05 09:16:48] [ INFO ] [CreditServiceImpl:62] Delete Credit
+[2022-07-05 09:24:53] [ INFO ] [CreditServiceImpl:22] List all Credits
+[2022-07-05 09:25:35] [ INFO ] [CreditServiceImpl:22] List all Credits
+[2022-07-05 09:25:41] [ INFO ] [CreditServiceImpl:62] Delete Credit
+[2022-07-05 09:25:45] [ INFO ] [CreditServiceImpl:22] List all Credits

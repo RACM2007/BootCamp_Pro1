@@ -6,14 +6,14 @@ import reactor.core.publisher.Mono;
 
 public interface ClientService {
 
-    Flux<Clients> findAll();
+    public Flux<Clients> findAll();
 
+    public Mono<Clients> getClient(String cod);
 
+    public Mono<Clients> save(Clients clients);
 
-    Mono<Clients> save(Clients clients);
+    public Mono<Clients> update(Clients clients);
 
-    Mono<Clients> update(Clients clients);
-
-    Mono<Clients> logicDelete(String cod);
+    public Mono<Clients> logicDelete(String cod);
 
 }
