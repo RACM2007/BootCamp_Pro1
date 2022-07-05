@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bootcamp.MS_Transactions.model.Transactions;
 import com.bootcamp.MS_Transactions.repository.TransactionRepository;
+import com.mongodb.MongoException;
 
 import reactor.core.publisher.Mono;
 
@@ -126,7 +127,15 @@ public class TransactionServiceImpl implements TransactionService{
 	
 	private Mono<Transactions> RegTra(Transactions Tra, int type){
 		Tra.setType(type);
-		return transactionRepository.save(Tra);
+		
+		try {
+		
+			return transactionRepository.save(Tra);
+		
+		}catch (MongoException e) {
+			LogJava.error("Error in Save - Mongo - "+e.getMessage());
+			return null;
+		}
 	}
 	
 }

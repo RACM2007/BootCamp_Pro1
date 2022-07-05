@@ -24,6 +24,7 @@ public class TransactionController {
 	
 	@GetMapping(value = "/Inquiry/{pro}/{cur}/{num}")
 	public Mono<Transactions> Inquiry(@PathVariable("pro") String pro, @PathVariable("cur") String cur, @PathVariable("num") String num){
+		//Inquiry Transaction
 		return transactionService.Inquiry(pro, cur, num);
 	}
 	
@@ -33,6 +34,8 @@ public class TransactionController {
 			@PathVariable("num") String Number,
 			@PathVariable("codcli") String Codcli,
 			@PathVariable("newamou") double Amount){
+		//Make a Deposit in a Saving Account
+		
 		return transactionService.Deposits(pro, Currency, Number,Codcli, Amount);
 	}
 	
@@ -42,6 +45,8 @@ public class TransactionController {
 			@PathVariable("num") String Number,
 			@PathVariable("codcli") String Codcli,
 			@PathVariable("newamou") double Amount){
+		//Make a Withdrawal in a Saving Account
+		
 		return transactionService.Withdrawal(pro, Currency, Number,Codcli, Amount);
 	}
 	
@@ -51,7 +56,9 @@ public class TransactionController {
 			@PathVariable("num") String Number,
 			@PathVariable("codcli") String Codcli,
 			@PathVariable("newamou") double Amount){
-		return transactionService.Withdrawal(pro, Currency, Number,Codcli, Amount);
+		//Make a Credit Pay
+		
+		return transactionService.CreditPay(pro, Currency, Number,Codcli, Amount);
 	}
 	
 	@PostMapping(value="/CardPay/{pro}/{cur}//{num}/{codcli}/{newamou}")
@@ -60,6 +67,7 @@ public class TransactionController {
 			@PathVariable("num") String Number,
 			@PathVariable("codcli") String Codcli,
 			@PathVariable("newamou") double Amount){
+		//Make a CreditCard Pay
 		return transactionService.CardPay(pro, Currency, Number,Codcli, Amount);
 	}
 	
@@ -69,6 +77,8 @@ public class TransactionController {
 			@PathVariable("num") String Number,
 			@PathVariable("codcli") String Codcli,
 			@PathVariable("newamou") double Amount){
+		//Make a credit card consumption
+		
 		return transactionService.ConsumptionCreditCard(pro, Currency, Number,Codcli, Amount);
 	}
 	
