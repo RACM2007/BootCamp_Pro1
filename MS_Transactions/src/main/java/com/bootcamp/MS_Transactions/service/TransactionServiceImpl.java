@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bootcamp.MS_Transactions.model.Transactions;
+import com.bootcamp.MS_Transactions.Entity.Transfer;
 import com.bootcamp.MS_Transactions.repository.TransactionRepository;
 import com.mongodb.MongoException;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -31,7 +33,6 @@ public class TransactionServiceImpl implements TransactionService{
 				).next();
 		
 		return Obj1;
-	
 	}
 
 	@Override
@@ -47,6 +48,8 @@ public class TransactionServiceImpl implements TransactionService{
 		Tra.setDateCreate(new Date());
 		Tra.setNumber(Number);
 		Tra.setProduct(pro);
+		
+		Tra= OpeOurEntity(Tra);
 		
 		
 		return RegTra(Tra,1);
@@ -66,6 +69,7 @@ public class TransactionServiceImpl implements TransactionService{
 		Tra.setNumber(Number);
 		Tra.setProduct(pro);
 		
+		Tra= OpeOurEntity(Tra);
 		
 		return RegTra(Tra,2);
 	}
@@ -84,6 +88,7 @@ public class TransactionServiceImpl implements TransactionService{
 		Tra.setNumber(Number);
 		Tra.setProduct(pro);
 		
+		Tra= OpeOurEntity(Tra);
 		
 		return RegTra(Tra,3);
 	}
@@ -102,6 +107,7 @@ public class TransactionServiceImpl implements TransactionService{
 		Tra.setNumber(Number);
 		Tra.setProduct(pro);
 		
+		Tra= OpeOurEntity(Tra);
 		
 		return RegTra(Tra,4);
 	}
@@ -120,22 +126,58 @@ public class TransactionServiceImpl implements TransactionService{
 		Tra.setNumber(Number);
 		Tra.setProduct(pro);
 		
+		Tra= OpeOurEntity(Tra);
 		
 		return RegTra(Tra,5);
 	}
 
+	private Transactions OpeOurEntity(Transactions Tra) {
+		
+		String cZero="0";
+		
+		Tra.setProductD(cZero);
+		Tra.setCurrencyD(cZero);
+		Tra.setNumberD(cZero);
+		Tra.setCodEntity("1");
+		
+		return Tra;
+	}
 	
 	private Mono<Transactions> RegTra(Transactions Tra, int type){
 		Tra.setType(type);
 		
 		try {
-		
 			return transactionRepository.save(Tra);
-		
 		}catch (MongoException e) {
 			LogJava.error("Error in Save - Mongo - "+e.getMessage());
 			return null;
 		}
 	}
+
+	@Override
+	public Flux<Transactions> AllTransactions() {
+		return transactionRepository.findAll();
+	}
+
+	@Override
+	public Mono<Transactions> Transfer(Transfer transfer) {
+		LogJava.info("Make a ConsumptionCreditCard");
+		
+		Transactions Tra = new Transactions();
+		
+		Tra.setAmount(transfer.getAmount());
+		Tra.setCurrency(transfer.getCurrency());
+		Tra.setDateCreate(new Date());
+		Tra.setNumber(transfer.getNumber());
+		Tra.setProduct(transfer.getProduct());
+		
+		Tra.setProductD(transfer.getProduct());
+		Tra.setCurrencyD(transfer.getCurrencyD());
+		Tra.setNumberD(transfer.getNumberD());
+		Tra.setCodEntity(transfer.getCodEntity());
+		
+		return RegTra(Tra,5);
+	}
+
 	
 }

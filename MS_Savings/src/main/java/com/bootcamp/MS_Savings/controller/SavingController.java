@@ -1,5 +1,7 @@
 package com.bootcamp.MS_Savings.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcamp.MS_Savings.service.SavingService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import com.bootcamp.MS_Savings.Entity.SavingObj;
-import com.bootcamp.MS_Savings.model.Accounts_Relationship;
 import com.bootcamp.MS_Savings.model.Savings;
 
 
@@ -29,6 +31,13 @@ public class SavingController {
 	@Autowired
 	SavingService savingService;
 	
+	public static final String SAV_SERVICE = "savingService";
+	
+	@GetMapping(value = "/Get_Report")
+	public Map<String,Object> GetReport() {
+		//Get a Resume about the savings
+		return savingService.SavReport();
+	}
 	
 	@GetMapping(value = "/AllSavings")
 	public Flux<Savings> AllSavings() {
@@ -43,12 +52,23 @@ public class SavingController {
 	}
 	
 	@PutMapping(value = "/AmountUpdate/{pro}/{cur}/{num}/{newamou}")
+	@CircuitBreaker(name = SAV_SERVICE,fallbackMethod = "getInquiryZero")
 	public Mono<Savings> AmountUpdate(@PathVariable("pro")String pro, 
 			@PathVariable("cur")String Currency, 
 			@PathVariable("num") String Number,
-			@PathVariable("newamou") double NewAmou){
+			@PathVariable("newamou") double NewAmou) throws Exception{
 		//Amount update of a Saving Account 
 		return savingService.AmountUpdate(pro, Currency, Number, NewAmou);
+	}
+	
+	public Mono<Savings> getInquiryZero(Exception e){
+		Savings Sav = new Savings();
+		
+		Sav.setAmount(-10);
+		
+		Mono<Savings> SavReturn = Mono.just(Sav);
+		
+		return SavReturn;
 	}
 	
 	@PostMapping(value="/Open")

@@ -1,6 +1,8 @@
 package com.bootcamp.MS_Savings.service;
 
 
+import java.util.Map;
+
 import com.bootcamp.MS_Savings.Entity.SavingObj;
 import com.bootcamp.MS_Savings.model.Savings;
 
@@ -23,7 +25,8 @@ public interface SavingService {
 	
 	public Mono<Integer> GetTypeAccount(String pro, String Currency, String Number);
 	
-	public Mono<Savings> AmountUpdate(String pro, String Currency, String Number,double NewAmou);
+	public Mono<Savings> AmountUpdate(String pro, String Currency, String Number,double NewAmou) throws Exception;
 	
+	public Map<String,Object> SavReport();
 	
 }

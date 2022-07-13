@@ -19,6 +19,7 @@ public class Transactions  implements Serializable  {
 	@Id
 	private ObjectId id;
 	
+	private String Trans_Number;
 	private int Type;
 	private String Product;
 	private String Currency;
@@ -26,4 +27,11 @@ public class Transactions  implements Serializable  {
 	private String CodClient;
 	private double Amount;
 	private Date DateCreate;
+	
+	private String ProductD;
+	private String CurrencyD;
+	private String NumberD;
+	
+	private String CodEntity;
+	
 }
