@@ -33,6 +33,18 @@ public class CreditController {
         return creditService.Inquiry(pro, cur, num);
     }
 
+    @GetMapping(value = "/GetCreditsbyCodCli/{cod}")
+    public Mono<Credits> GetCreditsbyCodCli(@PathVariable("cod") String cod) {
+        //Get Credit by CodCli
+        return creditService.getCreditbyCodCli(cod);
+    }
+
+    @GetMapping(value = "/GetReport")
+    public Mono<Credits> GetReport() {
+        //Get Report Credit
+        return creditService.getReport();
+    }
+
     @PutMapping(value = "/UpdateBalance/{pro}/{cur}/{num}/{newamou}")
     public Mono<Credits> UpdateBalance(@PathVariable("pro")String pro,
                                       @PathVariable("cur")String Currency,

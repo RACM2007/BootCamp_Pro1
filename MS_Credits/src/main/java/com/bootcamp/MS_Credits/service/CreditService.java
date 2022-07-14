@@ -12,6 +12,10 @@ public interface CreditService {
 
     public Mono<Double> Inquiry(String pro, String currency, String number);
 
+    public Mono<Credits> getCreditbyCodCli(String cod);
+
+    public Mono<Credits> getReport();
+
     public Mono<Credits> updateBalance(String pro, String currency, String number, double NewAmou);
 
     public Mono<Void> delete(String pro, String currency, String number);

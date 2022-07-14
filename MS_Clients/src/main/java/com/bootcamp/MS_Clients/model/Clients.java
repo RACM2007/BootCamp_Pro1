@@ -21,5 +21,6 @@ public class Clients implements Serializable {
     private String Address;
     private String Document;
     private int FlgActive;
+    private int Type;
 
 }

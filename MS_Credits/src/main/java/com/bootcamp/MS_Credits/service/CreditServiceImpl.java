@@ -42,6 +42,29 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
+    public Mono<Credits> getCreditbyCodCli(String cod) {
+        LogJava.info("Get Credits by CodCli");
+
+        Mono<Credits> Obj1 = creditRepository.findAll().filter(x -> x.getCodClient().equals(cod)
+        ).next();
+
+        return Obj1;
+    }
+
+    @Override
+    public Mono<Credits> getReport() {
+        LogJava.info("Get Report");
+
+        Mono<Credits> Obj1 = creditRepository.findAll().next();
+
+        Credits Cred = Obj1.block();
+
+        Cred.getAmount();
+
+        return Obj1;
+    }
+
+    @Override
     public Mono<Credits> updateBalance(String pro, String currency, String number, double NewAmou) {
         LogJava.info("Update Balance");
 
