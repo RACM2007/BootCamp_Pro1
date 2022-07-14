@@ -6,12 +6,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bootcamp.MS_Transactions.Entity.Transfer;
 import com.bootcamp.MS_Transactions.model.Transactions;
 import com.bootcamp.MS_Transactions.service.TransactionService;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -26,6 +29,12 @@ public class TransactionController {
 	public Mono<Transactions> Inquiry(@PathVariable("pro") String pro, @PathVariable("cur") String cur, @PathVariable("num") String num){
 		//Inquiry Transaction
 		return transactionService.Inquiry(pro, cur, num);
+	}
+	
+	@GetMapping(value = "/AllTransactions")
+	public Flux<Transactions> AllTransactions(){
+		//Inquiry Transaction
+		return transactionService.AllTransactions();
 	}
 	
 	@PostMapping(value="/Deposits/{pro}/{cur}/{num}/{codcli}/{newamou}")
@@ -82,4 +91,10 @@ public class TransactionController {
 		return transactionService.ConsumptionCreditCard(pro, Currency, Number,Codcli, Amount);
 	}
 	
+	@PostMapping(value="/Transfer")
+	public Mono<Transactions> Transfer(@RequestBody Transfer Transfer){
+		//Make a credit card consumption
+		
+		return transactionService.Transfer(Transfer);
+	}
 }

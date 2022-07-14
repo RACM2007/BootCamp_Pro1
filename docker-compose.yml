@@ -1,0 +1,31 @@
+version: "3.8"
+
+services: 
+
+  commissions: 
+    build: MS_Commissions
+    mem_limit: 700m
+    ports:
+      - "9088:9088"
+    networks:
+      - bootcamp
+  
+  savings: 
+    build: MS_Savings
+    mem_limit: 700m
+    ports:
+      - "8090:8090"
+    networks:
+      - bootcamp
+  
+  mongo: 
+    image: mongo
+    mem_limit: 700m
+    ports:
+      - "27020:27017"
+    networks:
+      - bootcamp
+  
+      
+networks:
+  bootcamp:

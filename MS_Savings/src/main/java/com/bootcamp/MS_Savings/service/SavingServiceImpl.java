@@ -1,15 +1,30 @@
 package com.bootcamp.MS_Savings.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.GroupOperation;
+import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+import org.springframework.data.mongodb.core.aggregation.SortOperation;
+import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import com.bootcamp.MS_Savings.Entity.SavingObj;
+import com.bootcamp.MS_Savings.Entity.SumAmmount;
 import com.bootcamp.MS_Savings.model.Accounts_Relationship;
 import com.bootcamp.MS_Savings.model.Savings;
 import com.bootcamp.MS_Savings.repository.SavingRepository;
@@ -26,8 +41,85 @@ public class SavingServiceImpl implements SavingService{
 	@Autowired
 	private Accounts_RelationshipService accounts_RelationshipService;
 	
+	@Autowired
+	MongoTemplate mongoTemplate;
+	
+	
 	private static Logger LogJava = Logger.getLogger(SavingServiceImpl.class);
 
+	@Override
+	public Map<String,Object> SavReport() {
+		LogJava.info("Generate Report");
+		
+		//Savings Account List
+		Map<String, Object> response = new HashMap<String, Object>();
+		
+		
+		Flux<Savings> PagSav = savingRepository.findAll();
+		
+		SortOperation sortOperation = Aggregation.sort(Sort.by(Sort.Direction.DESC,"DateCreate"));
+		Aggregation aggregationAll = Aggregation.newAggregation(sortOperation);
+		
+		AggregationResults<Savings> resultsAll =
+				mongoTemplate.aggregate(aggregationAll,"Savings", Savings.class);
+		
+		//Savings List
+		response.put("Savings_Account_List", resultsAll.getMappedResults());
+		
+		//Total Elements
+		response.put("Total_Savings_Account", PagSav.count().block());
+		
+		//Ammount Sum
+		GroupOperation groupOperation = Aggregation.group().sum("Amount").as("totalAmount");
+		MatchOperation comparisonOperators = Aggregation.match(Criteria.where("FlgActive").is(1));
+
+		TypedAggregation<Savings> aggregation = Aggregation.newAggregation(
+				Savings.class,
+				comparisonOperators,
+				groupOperation
+		);
+
+		AggregationResults<SumAmmount> results =
+				mongoTemplate.aggregate(aggregation, SumAmmount.class);
+		
+		response.put("Total_Sum_Amount", results.getMappedResults());
+		
+		//Ammount Average
+		GroupOperation groupOperation2 = Aggregation.group().avg("Amount").as("totalAmount");
+		MatchOperation comparisonOperators2 = Aggregation.match(Criteria.where("FlgActive").is(1));
+
+		TypedAggregation<Savings> aggregation2 = Aggregation.newAggregation(
+				Savings.class,
+				comparisonOperators2,
+				groupOperation2
+		);
+
+		AggregationResults<SumAmmount> results2 =
+				mongoTemplate.aggregate(aggregation2, SumAmmount.class);
+		
+		response.put("Average_Amount", results2.getMappedResults());
+		
+		
+		//Rate Average
+		GroupOperation groupOperation3 = Aggregation.group().avg("Rate").as("totalAmount");
+
+		TypedAggregation<Savings> aggregation3 = Aggregation.newAggregation(
+				Savings.class,
+				groupOperation3
+		);
+
+		AggregationResults<SumAmmount> results3 =
+				mongoTemplate.aggregate(aggregation3, SumAmmount.class);
+		
+		response.put("Average_Rate", results3.getMappedResults());
+		
+		
+		//Last Saving
+		response.put("Saving_Last", resultsAll.getMappedResults().get(resultsAll.getMappedResults().size()-1));
+		
+		return response;
+	}
+	
 	@Override
 	public Flux<Savings> AllSavings() {
 		LogJava.info("List all Savings Account");
@@ -62,18 +154,23 @@ public class SavingServiceImpl implements SavingService{
 	}
 
 	@Override
-	public Mono<Savings> AmountUpdate(String pro, String Currency, String Number,double NewAmou) {
+	public Mono<Savings> AmountUpdate(String pro, String Currency, String Number,double NewAmou) throws Exception {
 		LogJava.info("AmountUpdate");
 		
 		Mono<Savings> Obj1 = savingRepository.findAll().filter(x -> x.getProduct().equals(pro)
 				&& x.getCurrency().equals(Currency)
 				&& x.getNumber().equals(Number)
 				).next();
+	
+		Savings Sav = new Savings();
 		
+		if (Obj1 != null) {
+			Sav = Obj1.block();
+			
+			Sav.setAmount(NewAmou);
+		}
 		
-		Savings Sav = Obj1.block();
-		
-		Sav.setAmount(NewAmou);
+		//throw new  Exception("asd");
 		
 		return savingRepository.save(Sav);
 	}
