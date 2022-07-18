@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bootcamp.MS_Transactions.model.Transactions;
 import com.bootcamp.MS_Transactions.Entity.Transfer;
+import com.bootcamp.MS_Transactions.interfaces.SetType;
 import com.bootcamp.MS_Transactions.repository.TransactionRepository;
 import com.mongodb.MongoException;
 
@@ -22,15 +23,17 @@ public class TransactionServiceImpl implements TransactionService{
 	
 	private static Logger LogJava = Logger.getLogger(TransactionServiceImpl.class);
 	
+	private SetType SF;
+	
 	@Override
-	public Mono<Transactions> Inquiry(String pro, String Currency, String Number) {
+	public Flux<Transactions> Inquiry(String pro, String Currency, String Number) {
 		
 		LogJava.info("List all Transaction");
 		
-		Mono<Transactions> Obj1 = transactionRepository.findAll().filter(x -> x.getProduct().equals(pro)
+		Flux<Transactions> Obj1 = transactionRepository.findAll().filter(x -> x.getProduct().equals(pro)
 				&& x.getCurrency().equals(Currency)
 				&& x.getNumber().equals(Number)
-				).next();
+				);
 		
 		return Obj1;
 	}
@@ -144,8 +147,16 @@ public class TransactionServiceImpl implements TransactionService{
 	}
 	
 	private Mono<Transactions> RegTra(Transactions Tra, int type){
-		Tra.setType(type);
 		
+		SetType SF = (T , y) -> T.setType(y);
+		
+		SF.Set_Type(Tra, type);
+		
+		return Save(Tra);
+		
+	}
+
+	private Mono<Transactions> Save (Transactions Tra){
 		try {
 			return transactionRepository.save(Tra);
 		}catch (MongoException e) {
@@ -153,9 +164,9 @@ public class TransactionServiceImpl implements TransactionService{
 			return null;
 		}
 	}
-
+	
 	@Override
-	public Flux<Transactions> AllTransactions() {
+	public Flux<Transactions> AllTransactions() {		
 		return transactionRepository.findAll();
 	}
 
@@ -177,6 +188,27 @@ public class TransactionServiceImpl implements TransactionService{
 		Tra.setCodEntity(transfer.getCodEntity());
 		
 		return RegTra(Tra,5);
+	}
+	
+	public Mono<Transactions> Transfer(Transfer transfer, String numDebitCard) {
+		LogJava.info("Make a ConsumptionCreditCard");
+		
+		Transactions Tra = new Transactions();
+		
+		Tra.setAmount(transfer.getAmount());
+		Tra.setCurrency(transfer.getCurrency());
+		Tra.setDateCreate(new Date());
+		Tra.setNumber(transfer.getNumber());
+		Tra.setProduct(transfer.getProduct());
+		
+		Tra.setProductD(transfer.getProduct());
+		Tra.setCurrencyD(transfer.getCurrencyD());
+		Tra.setNumberD(transfer.getNumberD());
+		Tra.setCodEntity(transfer.getCodEntity());
+		
+		Tra.setCardNumber(numDebitCard);
+		
+		return RegTra(Tra,4);
 	}
 
 	

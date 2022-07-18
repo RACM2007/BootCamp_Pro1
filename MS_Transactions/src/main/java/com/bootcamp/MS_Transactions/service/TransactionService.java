@@ -10,7 +10,7 @@ public interface TransactionService {
 
 	//Methods Declaration
 	
-	public Mono<Transactions> Inquiry(String pro, String Currency, String Number);
+	public Flux<Transactions> Inquiry(String pro, String Currency, String Number);
 	public Flux<Transactions> AllTransactions();
 	public Mono<Transactions> Deposits(String pro, String Currency, String Number, String Codcli, double Amount);
 	public Mono<Transactions> Withdrawal(String pro, String Currency, String Number, String Codcli, double Amount);

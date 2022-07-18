@@ -32,6 +32,9 @@ public class Transactions  implements Serializable  {
 	private String CurrencyD;
 	private String NumberD;
 	
+	private String CardNumber;
+
+	
 	private String CodEntity;
 	
 }

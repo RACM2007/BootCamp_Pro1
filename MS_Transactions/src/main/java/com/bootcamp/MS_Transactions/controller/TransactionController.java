@@ -26,7 +26,7 @@ public class TransactionController {
 	TransactionService transactionService;
 	
 	@GetMapping(value = "/Inquiry/{pro}/{cur}/{num}")
-	public Mono<Transactions> Inquiry(@PathVariable("pro") String pro, @PathVariable("cur") String cur, @PathVariable("num") String num){
+	public Flux<Transactions> Inquiry(@PathVariable("pro") String pro, @PathVariable("cur") String cur, @PathVariable("num") String num){
 		//Inquiry Transaction
 		return transactionService.Inquiry(pro, cur, num);
 	}
