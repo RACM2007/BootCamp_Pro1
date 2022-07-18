@@ -27,7 +27,10 @@ jobs:
       working-directory: MS_Commissions
     - name: Compile with Maven
       run: mvn compile
+      working-directory: MS_Commissions
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+      working-directory: MS_Commissions
     - name: Test with Maven
       run: mvn test
+      working-directory: MS_Commissions
