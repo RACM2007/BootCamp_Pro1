@@ -21,7 +21,11 @@ public interface SavingService {
 	
 	public Flux<Savings> AllSavings();
 	
+	public Flux<Savings> Savings_byCodcli(String codcli);
+	
 	public Mono<Double> Inquiry(String pro, String Currency, String Number);
+	
+	public Mono<Double> InquiryDebitCard(String Number);
 	
 	public Mono<Integer> GetTypeAccount(String pro, String Currency, String Number);
 	

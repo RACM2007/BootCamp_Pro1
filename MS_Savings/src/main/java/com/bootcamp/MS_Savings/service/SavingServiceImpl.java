@@ -1,5 +1,6 @@
 package com.bootcamp.MS_Savings.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,11 +43,39 @@ public class SavingServiceImpl implements SavingService{
 	private Accounts_RelationshipService accounts_RelationshipService;
 	
 	@Autowired
+	private Debit_CardService debit_CardService;
+		
+	@Autowired
 	MongoTemplate mongoTemplate;
 	
 	
 	private static Logger LogJava = Logger.getLogger(SavingServiceImpl.class);
 
+	@Override
+	public Flux<Savings> Savings_byCodcli(String codcli) {
+		
+		List<Accounts_Relationship> Far = accounts_RelationshipService.GetAccountSavList(codcli);
+		
+		List<Savings> LSav = new ArrayList<Savings>();
+		
+		Far.forEach(x -> LSav.add(GetSavingByProCurNum(x.getProduct(), x.getCurrency(), x.getNumber())));
+		
+		Mono<List<Savings>> MLSav = Mono.just(LSav);
+		
+		return MLSav.flatMapMany(Flux::fromIterable);
+				
+		
+	}
+	
+	public Savings GetSavingByProCurNum (String Product, String Currency, String Number){
+		Savings Obj1 = savingRepository.findAll().filter(x -> x.getProduct().equals(Product)
+				&& x.getCurrency().equals(Currency)
+				&& x.getNumber().equals(Number)
+				).next().block();
+		
+		return Obj1;
+	}
+	
 	@Override
 	public Map<String,Object> SavReport() {
 		LogJava.info("Generate Report");
@@ -137,6 +166,16 @@ public class SavingServiceImpl implements SavingService{
 				).next();
 		
 		return Obj1.map( r -> r.getAmount());
+		
+	}
+	
+	@Override
+	public Mono<Double> InquiryDebitCard(String Number) {
+		
+		SavingObj SO = debit_CardService.GetPrinSav(Number);
+		
+		return Inquiry(SO.getProduct(), SO.getCurrency(), SO.getNumber());
+		
 		
 	}
 	
@@ -259,11 +298,8 @@ public class SavingServiceImpl implements SavingService{
 		
 		return savingRepository.delete(Sav);
 	}
-	
-
-
 
 	
+
 		
-
 }

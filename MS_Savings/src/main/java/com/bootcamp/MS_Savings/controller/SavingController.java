@@ -39,6 +39,12 @@ public class SavingController {
 		return savingService.SavReport();
 	}
 	
+	@GetMapping(value = "/Savings_byCodcli/{codcli}")
+	public Flux<Savings> Savings_byCodcli(@PathVariable("codcli") String codcli) {
+		//List of savings by Codcli
+		return savingService.Savings_byCodcli(codcli);
+	}
+	
 	@GetMapping(value = "/AllSavings")
 	public Flux<Savings> AllSavings() {
 		//list all savings accounts
@@ -49,6 +55,12 @@ public class SavingController {
 	public Mono<Double> Inquiry(@PathVariable("pro") String pro, @PathVariable("cur") String cur, @PathVariable("num") String num) {
 		//Balance inquiry
 		return savingService.Inquiry(pro, cur, num);
+	}
+	
+	@GetMapping(value = "/InquiryDebitCard/{num}")
+	public Mono<Double> InquiryDebitCard(@PathVariable("num") String num) {
+		//Balance inquiry
+		return savingService.InquiryDebitCard(num);
 	}
 	
 	@PutMapping(value = "/AmountUpdate/{pro}/{cur}/{num}/{newamou}")

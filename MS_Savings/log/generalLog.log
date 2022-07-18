@@ -148,3 +148,5 @@
 [2022-07-12 14:42:06] [ INFO ] [SavingServiceImpl:158] AmountUpdate
 [2022-07-12 14:42:25] [ INFO ] [SavingServiceImpl:158] AmountUpdate
 [2022-07-12 14:43:17] [ INFO ] [SavingServiceImpl:158] AmountUpdate
+[2022-07-18 09:18:52] [ INFO ] [SavingServiceImpl:125] List all Savings Account
+[2022-07-18 12:41:15] [ INFO ] [SavingServiceImpl:161] Inquiry

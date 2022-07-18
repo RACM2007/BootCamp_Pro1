@@ -13,6 +13,8 @@ public interface Accounts_RelationshipService {
 	
 	public Flux<Accounts_Relationship> GetAccountSav(String codcli);
 	
+	public List<Accounts_Relationship> GetAccountSavList(String codcli);
+	
 	public Mono<Accounts_Relationship> save(Accounts_Relationship AR);
 	
 }

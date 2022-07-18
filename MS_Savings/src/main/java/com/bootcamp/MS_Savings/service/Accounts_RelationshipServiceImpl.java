@@ -3,6 +3,13 @@ package com.bootcamp.MS_Savings.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+import org.springframework.data.mongodb.core.aggregation.SortOperation;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import com.bootcamp.MS_Savings.model.Accounts_Relationship;
@@ -18,6 +25,9 @@ public class Accounts_RelationshipServiceImpl  implements Accounts_RelationshipS
 
 	@Autowired
 	private Accounts_RelationshipRepository accounts_RelationshipRepository;
+	
+	@Autowired
+	MongoTemplate mongoTemplate;
 		
 	@Override
 	public boolean PerCond(List<String> codTit) {
@@ -46,6 +56,18 @@ public class Accounts_RelationshipServiceImpl  implements Accounts_RelationshipS
 				);
 		
 		return Obj1;
+	}
+
+	@Override
+	public List<Accounts_Relationship> GetAccountSavList(String codcli) {
+		MatchOperation comparisonOperators = Aggregation.match(Criteria.where("CodClient").is(codcli));
+		Aggregation aggregationAll = Aggregation.newAggregation(comparisonOperators);
+		
+		AggregationResults<Accounts_Relationship> resultsAll =
+				mongoTemplate.aggregate(aggregationAll,"Accounts_Relationship", Accounts_Relationship.class);
+		
+		return resultsAll.getMappedResults();
+		
 	}
 
 }
