@@ -77,6 +77,83 @@ public class SavingServiceImpl implements SavingService{
 	}
 	
 	@Override
+	public Map<String, Object> SavReportByProduct(String pro) {
+		LogJava.info("Generate Report by Product");
+		
+		//Savings Account List
+		Map<String, Object> response = new HashMap<String, Object>();
+		
+		Flux<Savings> PagSav = savingRepository.findAll().filter(x -> x.getProduct().equals(pro));
+		
+		SortOperation sortOperation = Aggregation.sort(Sort.by(Sort.Direction.DESC,"DateCreate"));
+		MatchOperation comparisonOperatorsA = Aggregation.match(Criteria.where("Product").is(pro));
+		Aggregation aggregationAll = Aggregation.newAggregation(sortOperation,comparisonOperatorsA);
+		
+		AggregationResults<Savings> resultsAll =
+				mongoTemplate.aggregate(aggregationAll,"Savings", Savings.class);
+		
+		//Savings List
+		response.put("Savings_Account_List", resultsAll.getMappedResults());
+		
+		//Total Elements
+		response.put("Total_Savings_Account", PagSav.count().block());
+		
+		//Ammount Sum
+		GroupOperation groupOperation = Aggregation.group().sum("Amount").as("totalAmount");
+		MatchOperation comparisonOperators = Aggregation.match(Criteria.where("FlgActive").is(1));
+
+		TypedAggregation<Savings> aggregation = Aggregation.newAggregation(
+				Savings.class,
+				comparisonOperators,
+				comparisonOperatorsA,
+				groupOperation
+		);
+
+		AggregationResults<SumAmmount> results =
+				mongoTemplate.aggregate(aggregation, SumAmmount.class);
+		
+		response.put("Total_Sum_Amount", results.getMappedResults());
+		
+		//Ammount Average
+		GroupOperation groupOperation2 = Aggregation.group().avg("Amount").as("totalAmount");
+		MatchOperation comparisonOperators2 = Aggregation.match(Criteria.where("FlgActive").is(1));
+
+		TypedAggregation<Savings> aggregation2 = Aggregation.newAggregation(
+				Savings.class,
+				comparisonOperators2,
+				comparisonOperatorsA,
+				groupOperation2
+		);
+
+		AggregationResults<SumAmmount> results2 =
+				mongoTemplate.aggregate(aggregation2, SumAmmount.class);
+		
+		response.put("Average_Amount", results2.getMappedResults());
+		
+		
+		//Rate Average
+		GroupOperation groupOperation3 = Aggregation.group().avg("Rate").as("totalAmount");
+
+		TypedAggregation<Savings> aggregation3 = Aggregation.newAggregation(
+				Savings.class,
+				groupOperation3
+		);
+
+		AggregationResults<SumAmmount> results3 =
+				mongoTemplate.aggregate(aggregation3, SumAmmount.class);
+		
+		response.put("Average_Rate", results3.getMappedResults());
+		
+		
+		//Last Saving
+		response.put("Saving_Last", resultsAll.getMappedResults().get(resultsAll.getMappedResults().size()-1));
+		
+
+		
+		return response;
+	}
+	
+	@Override
 	public Map<String,Object> SavReport() {
 		LogJava.info("Generate Report");
 		
@@ -299,7 +376,5 @@ public class SavingServiceImpl implements SavingService{
 		return savingRepository.delete(Sav);
 	}
 
-	
-
-		
+			
 }

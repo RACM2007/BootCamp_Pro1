@@ -39,6 +39,12 @@ public class SavingController {
 		return savingService.SavReport();
 	}
 	
+	@GetMapping(value = "/GetReportByProduct/{pro}")
+	public Map<String,Object> GetReportByProduct(@PathVariable("pro") String Product) {
+		//Get a Resume about the savings
+		return savingService.SavReportByProduct(Product);
+	}
+	
 	@GetMapping(value = "/Savings_byCodcli/{codcli}")
 	public Flux<Savings> Savings_byCodcli(@PathVariable("codcli") String codcli) {
 		//List of savings by Codcli

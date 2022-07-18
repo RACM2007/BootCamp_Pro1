@@ -33,4 +33,6 @@ public interface SavingService {
 	
 	public Map<String,Object> SavReport();
 	
+	public Map<String,Object> SavReportByProduct(String pro);
+	
 }
