@@ -20,3 +20,19 @@
 [2022-07-08 19:45:02] [ INFO ] [CreditServiceImpl:46] Get Credits
 [2022-07-08 19:45:17] [ INFO ] [CreditServiceImpl:46] Get Credits
 [2022-07-10 20:48:14] [ INFO ] [CreditServiceImpl:56] Get Report
+[2022-07-18 09:48:32] [ INFO ] [CreditServiceImpl:22] List all Credits
+[2022-07-18 09:54:33] [ INFO ] [CreditServiceImpl:22] List all Credits
+[2022-07-18 09:55:56] [ INFO ] [CreditServiceImpl:22] List all Credits
+[2022-07-18 10:02:28] [ INFO ] [CreditServiceImpl:22] List all Credits
+[2022-07-18 10:12:50] [ INFO ] [CreditServiceImpl:28] Save
+[2022-07-18 10:14:58] [ INFO ] [CreditServiceImpl:28] Save
+[2022-07-18 10:15:22] [ INFO ] [CreditServiceImpl:28] Save
+[2022-07-18 10:23:44] [ INFO ] [CreditServiceImpl:56] Get Report
+[2022-07-18 13:04:50] [ INFO ] [CreditServiceImpl:77] Generate Debt
+[2022-07-18 13:05:20] [ INFO ] [CreditServiceImpl:77] Generate Debt
+[2022-07-18 13:05:28] [ INFO ] [CreditServiceImpl:77] Generate Debt
+[2022-07-18 16:11:22] [ INFO ] [CreditServiceImpl:155] Generate Debt
+[2022-07-18 16:11:38] [ INFO ] [CreditServiceImpl:68] Generate Report
+[2022-07-19 11:20:02] [ INFO ] [CreditServiceImpl:35] List all Credits
+[2022-07-19 11:22:20] [ INFO ] [CreditServiceImpl:184] Update Balance
+[2022-07-19 11:22:20] [ INFO ] [CreditServiceImpl:52] Save

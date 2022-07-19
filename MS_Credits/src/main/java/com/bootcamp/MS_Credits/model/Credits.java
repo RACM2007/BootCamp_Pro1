@@ -27,5 +27,6 @@ public class Credits implements Serializable {
     private int FlgActive;
     private Date DateCreate;
     private int Type;
+    private int FlgExpiration;
 
 }

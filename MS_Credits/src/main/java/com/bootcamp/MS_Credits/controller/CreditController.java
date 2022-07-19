@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping(value="/credit")
 @CrossOrigin("*")
@@ -43,6 +45,18 @@ public class CreditController {
     public Mono<Credits> GetReport() {
         //Get Report Credit
         return creditService.getReport();
+    }
+
+    @GetMapping(value = "/GetReportbyProduct/{cod}")
+    public Map<String,Object> GetReportbyProduct(@PathVariable("cod") String cod) {
+        //Get Credit by CodCli
+        return creditService.getReportbyProduct(cod);
+    }
+
+    @GetMapping(value = "/Get_debt/{cod}")
+    public Mono<Credits> Get_debt(@PathVariable("cod") String cod) {
+        //Get Report Debt
+        return creditService.getDebt(cod);
     }
 
     @PutMapping(value = "/UpdateBalance/{pro}/{cur}/{num}/{newamou}")
