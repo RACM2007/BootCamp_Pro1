@@ -3,3 +3,7 @@
 [2022-07-11 09:30:15] [ INFO ] [TransactionServiceImpl:26] List all Transaction
 [2022-07-11 11:50:47] [ INFO ] [TransactionServiceImpl:164] Make a ConsumptionCreditCard
 [2022-07-18 14:39:40] [ INFO ] [TransactionServiceImpl:28] List all Transaction
+[2022-07-19 11:57:18] [ INFO ] [TransactionServiceImpl:44] Make a Deposit
+[2022-07-19 11:58:59] [ INFO ] [TransactionServiceImpl:44] Make a Deposit
+[2022-07-19 12:14:02] [ INFO ] [TransactionServiceImpl:44] Make a Deposit
+[2022-07-19 12:39:15] [ INFO ] [TransactionServiceImpl:44] Make a Deposit

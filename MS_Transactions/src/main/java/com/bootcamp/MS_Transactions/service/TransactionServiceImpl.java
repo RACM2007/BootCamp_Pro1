@@ -146,7 +146,8 @@ public class TransactionServiceImpl implements TransactionService{
 		return Tra;
 	}
 	
-	private Mono<Transactions> RegTra(Transactions Tra, int type){
+	@Override
+	public Mono<Transactions> RegTra(Transactions Tra, int type){
 		
 		SetType SF = (T , y) -> T.setType(y);
 		

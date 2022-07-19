@@ -19,4 +19,6 @@ public interface TransactionService {
 	public Mono<Transactions> ConsumptionCreditCard(String pro, String Currency, String Number, String Codcli, double Amount);
 	public Mono<Transactions> Transfer(Transfer transfer);
 	
+	public Mono<Transactions> RegTra(Transactions Tra, int type);
+	
 }
