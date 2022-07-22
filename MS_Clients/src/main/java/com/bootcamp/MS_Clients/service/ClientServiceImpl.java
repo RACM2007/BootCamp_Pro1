@@ -1,6 +1,7 @@
 package com.bootcamp.MS_Clients.service;
 
 import com.bootcamp.MS_Clients.model.Clients;
+import com.bootcamp.MS_Clients.model.NoClients;
 import com.bootcamp.MS_Clients.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

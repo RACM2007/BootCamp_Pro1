@@ -1,6 +1,7 @@
 package com.bootcamp.MS_Clients.controller;
 
 import com.bootcamp.MS_Clients.model.Clients;
+import com.bootcamp.MS_Clients.model.NoClients;
 import com.bootcamp.MS_Clients.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
