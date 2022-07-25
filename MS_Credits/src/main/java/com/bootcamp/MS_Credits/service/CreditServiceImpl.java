@@ -28,6 +28,9 @@ public class CreditServiceImpl implements CreditService {
     @Autowired
     MongoTemplate mongoTemplate;
 
+    @Autowired
+    private MSCreditKafRedis msCreditKafRedis;
+
     private static  Logger LogJava = Logger.getLogger(CreditServiceImpl.class);
 
     @Override
@@ -50,6 +53,7 @@ public class CreditServiceImpl implements CreditService {
     public Mono<Credits> save(Credits credits) {
         try{
             LogJava.info("Save");
+            msCreditKafRedis.Save_Credit_Redis(credits.getCodClient(), credits);
             return creditRepository.save(credits);
         }catch (MongoException e){
             LogJava.error("Error in Save - Mongo - "+e.getMessage());
