@@ -58,8 +58,6 @@ public class BootcoinController {
 			return bootcoinService.Registry_User_NoCli(Ncli);
 		}
 		
-		
-        
     }
 	
 	@PostMapping(value = "/BuyBootCoin")

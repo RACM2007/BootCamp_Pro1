@@ -49,6 +49,28 @@ public class ClientEventService {
 			Tat.subscribe();
 		}
 		
+	}
+	
+	@KafkaListener(
+			topics = "${topic.customer.name:yankiT}",
+			containerFactory = "kafkaListenerContainerFactory",
+	groupId = "grupo1")
+	public void consumer2(@Payload ClientCreatedEvent event , @Headers MessageHeaders headers) {
+		ClientCreatedEvent customerCreatedEvent = (ClientCreatedEvent) event;
+		log.info("Received Customer created event .... with Id={}, data={}",
+				customerCreatedEvent.getId(),
+				customerCreatedEvent.getData().toString());
+		
+		MSClientKaf MSC = customerCreatedEvent.getData();
+		
+		if (MSC.isIsclient()) {
+			//Mono <Clients> Tat = clientService.save(MSC.getCli());
+			Mono <Clients> Tat = clientRepository.save(MSC.getCli());
+			Tat.subscribe();
+		}else {
+			Mono <NoClients> Tat = noClientRepository.save(MSC.getNoCli());
+			Tat.subscribe();
+		}
 		
 	}
 	
