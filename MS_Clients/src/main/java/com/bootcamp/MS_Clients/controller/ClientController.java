@@ -1,5 +1,6 @@
 package com.bootcamp.MS_Clients.controller;
 
+import com.bootcamp.MS_Clients.Entity.CheckUser;
 import com.bootcamp.MS_Clients.model.Clients;
 import com.bootcamp.MS_Clients.model.NoClients;
 import com.bootcamp.MS_Clients.service.ClientService;
@@ -44,6 +45,12 @@ public class ClientController {
     public Mono<Clients> logicDelete(@PathVariable("cod")String cod){
         //Logic Delete
         return clientService.logicDelete(cod);
+    }
+    
+    @GetMapping(value = "/CheckUser/{docume}")
+    public Mono<CheckUser> Check_User(@PathVariable("docume") String docume) {
+        //List customers by code
+        return clientService.Check_User(docume);
     }
 
 }

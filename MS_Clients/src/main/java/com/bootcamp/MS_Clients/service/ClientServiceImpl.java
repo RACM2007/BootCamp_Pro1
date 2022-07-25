@@ -1,8 +1,11 @@
 package com.bootcamp.MS_Clients.service;
 
+import com.bootcamp.MS_Clients.Entity.CheckUser;
 import com.bootcamp.MS_Clients.model.Clients;
 import com.bootcamp.MS_Clients.model.NoClients;
 import com.bootcamp.MS_Clients.repository.ClientRepository;
+import com.bootcamp.MS_Clients.repository.NoClientRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -15,6 +18,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private ClientRepository clientRepository;
+    
+    @Autowired
+    private NoClientRepository noClientRepository;
 
     private static  Logger LogJava = Logger.getLogger(ClientServiceImpl.class);
 
@@ -69,4 +75,34 @@ public class ClientServiceImpl implements ClientService {
 
         return clientRepository.save(Cli);
     }
+
+	@Override
+	public Mono<CheckUser> Check_User(String docume) {
+		LogJava.info("Check User");
+		
+		Flux<Clients> Obj1 = clientRepository.findAll().filter(x -> x.getDocument().equals(docume)
+		        );
+		
+		CheckUser CU = new CheckUser();
+		
+		
+		if (Obj1.next().block() != null) {
+			Clients cli = Obj1.next().block();
+			
+			CU.setFlgCli(true);
+			CU.setCodClient(cli.getCodClient());
+			
+		}else {
+			Flux<NoClients> Obj2 = noClientRepository.findAll().filter(x -> x.getDocument().equals(docume)
+			        );
+			
+			NoClients cli = Obj2.next().block();
+			
+			CU.setFlgCli(false);
+			CU.setCodNoClient(cli.getCodNoClient());
+		}
+		
+		return Mono.just(CU);
+		
+	}
 }

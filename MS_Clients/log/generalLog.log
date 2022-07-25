@@ -25,3 +25,7 @@
 [2022-07-25 11:38:32] [ INFO ] [ClientServiceImpl:39] Save
 [2022-07-25 11:49:33] [ INFO ] [ClientServiceImpl:39] Save
 [2022-07-25 11:54:34] [ INFO ] [ClientServiceImpl:23] List all Clients
+[2022-07-25 16:57:41] [ INFO ] [ClientServiceImpl:81] Check User
+[2022-07-25 16:58:27] [ INFO ] [ClientServiceImpl:81] Check User
+[2022-07-25 16:59:13] [ INFO ] [ClientServiceImpl:81] Check User
+[2022-07-25 16:59:26] [ INFO ] [ClientServiceImpl:81] Check User

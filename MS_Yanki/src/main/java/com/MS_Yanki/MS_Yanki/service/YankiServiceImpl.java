@@ -12,11 +12,16 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import com.MS_Yanki.MS_Yanki.Entity.Clients;
+import com.MS_Yanki.MS_Yanki.Entity.CheckUser;
 import com.MS_Yanki.MS_Yanki.Entity.MSClientKaf;
 import com.MS_Yanki.MS_Yanki.Entity.NoClients;
+import com.MS_Yanki.MS_Yanki.Entity.Pay;
 import com.MS_Yanki.MS_Yanki.util.ClientCreatedEvent;
 import com.MS_Yanki.MS_Yanki.util.Event;
 import com.MS_Yanki.MS_Yanki.util.EventType;
+import com.MS_Yanki.MS_Yanki.util.PayCreatedEvent;
+
+import reactor.core.publisher.Mono;
 
 @Service
 public class YankiServiceImpl implements YankiService{
@@ -51,7 +56,7 @@ public class YankiServiceImpl implements YankiService{
 		
 	    this.producer.send(message);
 		
-		return "Usuario Registrado";
+		return "Registered User";
 	}
 
 	@Override
@@ -77,7 +82,56 @@ public class YankiServiceImpl implements YankiService{
 		
 	    this.producer.send(message);
 		
-		return "Usuario Registrado";
+		return "Registered User";
 	}
+
+	@Override
+	public String Send_Pay(Pay payO) {
+		
+		Event created = new PayCreatedEvent();
+		
+		payO.setType(1);
+		
+		created.setData(payO);
+		created.setId(UUID.randomUUID().toString());
+		created.setType(EventType.CREATED);
+		created.setDate(new Date());
+		
+		//this.producer.send(topicBootcoin,created);
+		
+		Message<Event> message = MessageBuilder
+	            .withPayload(created)
+	            .setHeader(KafkaHeaders.TOPIC, topicYanki)
+	            .build();
+		
+	    this.producer.send(message);
+		
+		return "Registered payment";
+	}
+
+	@Override
+	public String Rece_Pay(Pay payO) {
+		
+		Event created = new PayCreatedEvent();
+		
+		payO.setType(2);
+		
+		created.setData(payO);
+		created.setId(UUID.randomUUID().toString());
+		created.setType(EventType.CREATED);
+		created.setDate(new Date());
+		
+		//this.producer.send(topicBootcoin,created);
+		
+		Message<Event> message = MessageBuilder
+	            .withPayload(created)
+	            .setHeader(KafkaHeaders.TOPIC, topicYanki)
+	            .build();
+		
+	    this.producer.send(message);
+		
+		return "Received payment received";
+	}
+
 
 }

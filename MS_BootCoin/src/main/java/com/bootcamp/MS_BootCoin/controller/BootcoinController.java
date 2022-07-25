@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcamp.MS_BootCoin.Entity.Clients;
 import com.bootcamp.MS_BootCoin.Entity.NoClients;
+import com.bootcamp.MS_BootCoin.Entity.TraBootCoin;
 import com.bootcamp.MS_BootCoin.Entity.UserBC;
 import com.bootcamp.MS_BootCoin.model.BootCoin;
 import com.bootcamp.MS_BootCoin.service.BootcoinService;
@@ -61,16 +62,18 @@ public class BootcoinController {
     }
 	
 	@PostMapping(value = "/BuyBootCoin")
-    public Mono<BootCoin> Buy_BootCoin() {
+    public String Buy_BootCoin(@RequestBody TraBootCoin TBC) {
         //List all Commissions
-        return bootcoinService.Inquiry();
+        return bootcoinService.Buy_BootCoin(TBC);
     }
 	
 	@PostMapping(value = "/SoldBootCoin")
-    public Mono<BootCoin> Sold_BootCoin() {
+    public String Sold_BootCoin(@RequestBody TraBootCoin TBC) {
         //List all Commissions
-        return bootcoinService.Inquiry();
+        return bootcoinService.Sold_BootCoin(TBC);
     }
+	
+	
 	
 	@GetMapping(value = "/Check_user")
     public Mono<BootCoin> Check_user() {

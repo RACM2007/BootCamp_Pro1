@@ -11,10 +11,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.SortOperation;
-import org.springframework.data.redis.connection.ReactiveHashCommands;
-import org.springframework.data.redis.core.ReactiveHashOperations;
-import org.springframework.data.redis.core.ReactiveListOperations;
-import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -25,6 +21,7 @@ import org.springframework.stereotype.Service;
 import com.bootcamp.MS_BootCoin.Entity.Clients;
 import com.bootcamp.MS_BootCoin.Entity.MSClientKaf;
 import com.bootcamp.MS_BootCoin.Entity.NoClients;
+import com.bootcamp.MS_BootCoin.Entity.TraBootCoin;
 import com.bootcamp.MS_BootCoin.model.BootCoin;
 import com.bootcamp.MS_BootCoin.repository.BootcoinRepository;
 import com.bootcamp.MS_BootCoin.util.BootCoinCreatedEvent;
@@ -100,31 +97,6 @@ public class BootcoinServiceImpl implements BootcoinService {
 		});	
 	}
 
-	public String Registry_User() {
-		BootCoin BC = new BootCoin();
-		
-		BC.setCurrency_Sol_Change(5.2);
-		BC.setDateCreate(new Date());
-		
-		Event created = new BootCoinCreatedEvent();
-		
-		created.setData(BC);
-		created.setId(UUID.randomUUID().toString());
-		created.setType(EventType.CREATED);
-		created.setDate(new Date());
-		
-		//this.producer.send(topicBootcoin,created);
-		
-		Message<Event> message = MessageBuilder
-	            .withPayload(created)
-	            .setHeader(KafkaHeaders.TOPIC, topicBootcoin)
-	            .build();
-		
-	    this.producer.send(message);
-		
-		return "Usuario Registrado";
-	}
-
 	@Override
 	public String Registry_User_Cli(Clients cli) {
 		
@@ -176,6 +148,57 @@ public class BootcoinServiceImpl implements BootcoinService {
 	    this.producer.send(message);
 		
 		return "Usuario Registrado";
+	}
+
+	@Override
+	public String Buy_BootCoin(TraBootCoin tBC) {
+				
+		tBC.setTypeTra(1);
+		tBC.setDateCreate(new Date());
+		
+		Event created = new BootCoinCreatedEvent();
+		
+		created.setData(tBC);
+		created.setId(UUID.randomUUID().toString());
+		created.setType(EventType.CREATED);
+		created.setDate(new Date());
+		
+		//this.producer.send(topicBootcoin,created);
+		
+		Message<Event> message = MessageBuilder
+	            .withPayload(created)
+	            .setHeader(KafkaHeaders.TOPIC, topicBootcoin)
+	            .build();
+		
+	    this.producer.send(message);
+		
+		return "Compra Registrada";
+	}
+
+	@Override
+	public String Sold_BootCoin(TraBootCoin tBC) {
+		
+		tBC.setTypeTra(2);
+		
+		tBC.setDateCreate(new Date());
+		
+		Event created = new BootCoinCreatedEvent();
+		
+		created.setData(tBC);
+		created.setId(UUID.randomUUID().toString());
+		created.setType(EventType.CREATED);
+		created.setDate(new Date());
+		
+		//this.producer.send(topicBootcoin,created);
+		
+		Message<Event> message = MessageBuilder
+	            .withPayload(created)
+	            .setHeader(KafkaHeaders.TOPIC, topicBootcoin)
+	            .build();
+		
+	    this.producer.send(message);
+		
+		return "Venta Registrada";
 	}
 
 	

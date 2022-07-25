@@ -2,6 +2,7 @@ package com.bootcamp.MS_BootCoin.service;
 
 import com.bootcamp.MS_BootCoin.Entity.Clients;
 import com.bootcamp.MS_BootCoin.Entity.NoClients;
+import com.bootcamp.MS_BootCoin.Entity.TraBootCoin;
 import com.bootcamp.MS_BootCoin.model.BootCoin;
 
 import reactor.core.publisher.Flux;
@@ -18,5 +19,9 @@ public interface BootcoinService {
 	String Registry_User_Cli(Clients cli);
 	
 	String Registry_User_NoCli(NoClients Ncli);
+
+	String Buy_BootCoin(TraBootCoin tBC);
+
+	String Sold_BootCoin(TraBootCoin tBC);
 
 }
