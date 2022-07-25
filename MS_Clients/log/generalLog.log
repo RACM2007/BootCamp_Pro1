@@ -18,3 +18,10 @@
 [2022-07-12 14:24:50] [ INFO ] [ClientServiceImpl:28] Get Clients
 [2022-07-12 14:26:47] [ INFO ] [ClientServiceImpl:38] Save
 [2022-07-12 14:30:40] [ INFO ] [ClientServiceImpl:38] Save
+[2022-07-25 11:03:32] [ INFO ] [ClientServiceImpl:23] List all Clients
+[2022-07-25 11:35:17] [ INFO ] [ClientServiceImpl:39] Save
+[2022-07-25 11:36:18] [ INFO ] [ClientServiceImpl:23] List all Clients
+[2022-07-25 11:37:30] [ INFO ] [ClientServiceImpl:39] Save
+[2022-07-25 11:38:32] [ INFO ] [ClientServiceImpl:39] Save
+[2022-07-25 11:49:33] [ INFO ] [ClientServiceImpl:39] Save
+[2022-07-25 11:54:34] [ INFO ] [ClientServiceImpl:23] List all Clients

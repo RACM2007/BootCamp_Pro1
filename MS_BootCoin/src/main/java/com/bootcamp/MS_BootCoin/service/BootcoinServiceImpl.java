@@ -22,9 +22,13 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
+import com.bootcamp.MS_BootCoin.Entity.Clients;
+import com.bootcamp.MS_BootCoin.Entity.MSClientKaf;
+import com.bootcamp.MS_BootCoin.Entity.NoClients;
 import com.bootcamp.MS_BootCoin.model.BootCoin;
 import com.bootcamp.MS_BootCoin.repository.BootcoinRepository;
 import com.bootcamp.MS_BootCoin.util.BootCoinCreatedEvent;
+import com.bootcamp.MS_BootCoin.util.ClientCreatedEvent;
 import com.bootcamp.MS_BootCoin.util.Event;
 import com.bootcamp.MS_BootCoin.util.EventType;
 
@@ -59,7 +63,6 @@ public class BootcoinServiceImpl implements BootcoinService {
 		BC.setDateCreate(new Date());
 		
 		return bootcoinRepository.save(BC);
-		
 		
 	}
 
@@ -97,7 +100,6 @@ public class BootcoinServiceImpl implements BootcoinService {
 		});	
 	}
 
-	@Override
 	public String Registry_User() {
 		BootCoin BC = new BootCoin();
 		
@@ -107,6 +109,59 @@ public class BootcoinServiceImpl implements BootcoinService {
 		Event created = new BootCoinCreatedEvent();
 		
 		created.setData(BC);
+		created.setId(UUID.randomUUID().toString());
+		created.setType(EventType.CREATED);
+		created.setDate(new Date());
+		
+		//this.producer.send(topicBootcoin,created);
+		
+		Message<Event> message = MessageBuilder
+	            .withPayload(created)
+	            .setHeader(KafkaHeaders.TOPIC, topicBootcoin)
+	            .build();
+		
+	    this.producer.send(message);
+		
+		return "Usuario Registrado";
+	}
+
+	@Override
+	public String Registry_User_Cli(Clients cli) {
+		
+		MSClientKaf MS = new MSClientKaf();
+		
+		MS.setIsclient(true);
+		MS.setCli(cli);
+		
+		Event created = new ClientCreatedEvent();
+		
+		created.setData(MS);
+		created.setId(UUID.randomUUID().toString());
+		created.setType(EventType.CREATED);
+		created.setDate(new Date());
+		
+		//this.producer.send(topicBootcoin,created);
+		
+		Message<Event> message = MessageBuilder
+	            .withPayload(created)
+	            .setHeader(KafkaHeaders.TOPIC, topicBootcoin)
+	            .build();
+		
+	    this.producer.send(message);
+		
+		return "Usuario Registrado";
+	}
+
+	@Override
+	public String Registry_User_NoCli(NoClients Ncli) {
+		MSClientKaf MS = new MSClientKaf();
+		
+		MS.setIsclient(false);
+		MS.setNoCli(Ncli);
+		
+		Event created = new ClientCreatedEvent();
+		
+		created.setData(MS);
 		created.setId(UUID.randomUUID().toString());
 		created.setType(EventType.CREATED);
 		created.setDate(new Date());

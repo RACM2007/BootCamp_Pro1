@@ -1,5 +1,7 @@
 package com.bootcamp.MS_BootCoin.service;
 
+import com.bootcamp.MS_BootCoin.Entity.Clients;
+import com.bootcamp.MS_BootCoin.Entity.NoClients;
 import com.bootcamp.MS_BootCoin.model.BootCoin;
 
 import reactor.core.publisher.Flux;
@@ -13,6 +15,8 @@ public interface BootcoinService {
 
 	Flux<BootCoin> InquiryAll();
 
-	String Registry_User();
+	String Registry_User_Cli(Clients cli);
+	
+	String Registry_User_NoCli(NoClients Ncli);
 
 }

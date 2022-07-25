@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bootcamp.MS_BootCoin.Entity.Clients;
+import com.bootcamp.MS_BootCoin.Entity.NoClients;
+import com.bootcamp.MS_BootCoin.Entity.UserBC;
 import com.bootcamp.MS_BootCoin.model.BootCoin;
 import com.bootcamp.MS_BootCoin.service.BootcoinService;
 
@@ -42,10 +45,21 @@ public class BootcoinController {
         return bootcoinService.InquiryAll();
     }
 	
-	@PostMapping(value = "/RegistryUser")
-    public String Registry_User() {
-        //List all Commissions
-        return bootcoinService.Registry_User();
+	@PostMapping(value = "/RegistryUser/{isClient}")
+    public String Registry_User(@PathVariable("isClient") int isClient, @RequestBody UserBC uBC) {
+        //Registry User
+		
+		if (isClient==1) {
+			Clients cli = uBC.toClient();
+			return bootcoinService.Registry_User_Cli(cli);
+			
+		}else {
+			NoClients Ncli = uBC.toNoClient();
+			return bootcoinService.Registry_User_NoCli(Ncli);
+		}
+		
+		
+        
     }
 	
 	@PostMapping(value = "/BuyBootCoin")
