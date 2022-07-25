@@ -1,5 +1,7 @@
 package com.bootcamp.MS_Transactions.service;
 
+import com.bootcamp.MS_Transactions.Entity.Pay;
+import com.bootcamp.MS_Transactions.Entity.TraBootCoin;
 import com.bootcamp.MS_Transactions.Entity.Transfer;
 import com.bootcamp.MS_Transactions.model.Transactions;
 
@@ -20,5 +22,10 @@ public interface TransactionService {
 	public Mono<Transactions> Transfer(Transfer transfer);
 	
 	public Mono<Transactions> RegTra(Transactions Tra, int type);
+	public Mono<Transactions> Send_Pay(Pay payO);
+	public Mono<Transactions> Rece_Pay(Pay payO);
+	
+	public Mono<Transactions> Buy_BootCoin(TraBootCoin tBC);
+	public Mono<Transactions> Sold_BootCoin(TraBootCoin tBC);
 	
 }

@@ -151,3 +151,4 @@
 [2022-07-18 09:18:52] [ INFO ] [SavingServiceImpl:125] List all Savings Account
 [2022-07-18 12:41:15] [ INFO ] [SavingServiceImpl:161] Inquiry
 [2022-07-18 13:17:22] [ INFO ] [SavingServiceImpl:81] Generate Report by Product
+[2022-07-18 14:58:03] [ INFO ] [SavingServiceImpl:81] Generate Report by Product

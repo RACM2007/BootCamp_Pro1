@@ -36,4 +36,10 @@ public class Debit_CardServiceImpl implements Debit_CardService{
 		return Obj1;
 	}
 
+	@Override
+	public String GetCodCli(String debitCardNumber) {
+		return debit_CardRepository.findAll().filter(x -> x.getNum_Card().equals(debitCardNumber)
+				).next().block().getCodcli();
+	}
+
 }

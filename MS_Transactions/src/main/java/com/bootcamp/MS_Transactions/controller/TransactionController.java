@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bootcamp.MS_Transactions.Entity.Pay;
+import com.bootcamp.MS_Transactions.Entity.TraBootCoin;
 import com.bootcamp.MS_Transactions.Entity.Transfer;
 import com.bootcamp.MS_Transactions.model.Transactions;
 import com.bootcamp.MS_Transactions.service.TransactionService;
@@ -97,4 +99,33 @@ public class TransactionController {
 		
 		return transactionService.Transfer(Transfer);
 	}
+	
+	@PostMapping(value="/SendPay")
+	public Mono<Transactions> Send_Pay(@RequestBody Pay payO){
+		//Make a credit card consumption
+		
+		return transactionService.Send_Pay(payO);
+	}
+	
+	@PostMapping(value="/RecePay")
+	public Mono<Transactions> Rece_Pay(@RequestBody Pay payO){
+		//Make a credit card consumption
+		
+		return transactionService.Rece_Pay(payO);
+	}
+	
+	@PostMapping(value="/BuyBootCoin")
+	public Mono<Transactions> Buy_BootCoin(@RequestBody TraBootCoin TBC){
+		//Make a credit card consumption
+		
+		return transactionService.Buy_BootCoin(TBC);
+	}
+	
+	@PostMapping(value="/SoldBootCoin")
+	public Mono<Transactions> Sold_BootCoin(@RequestBody TraBootCoin TBC){
+		//Make a credit card consumption
+		
+		return transactionService.Sold_BootCoin(TBC);
+	}
+	
 }

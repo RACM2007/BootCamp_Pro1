@@ -33,6 +33,12 @@ public class SavingController {
 	
 	public static final String SAV_SERVICE = "savingService";
 	
+	@GetMapping(value = "/GetAccountOrden/{dcNum}/{amount}")
+	public Mono<Savings> GetAccountOrden(@PathVariable("dcNum") String DebitCardNumber, @PathVariable("amount") double Amount) {
+		//Get a Resume about the savings
+		return savingService.GetAccountOrden(DebitCardNumber,Amount);
+	}
+	
 	@GetMapping(value = "/Get_Report")
 	public Map<String,Object> GetReport() {
 		//Get a Resume about the savings

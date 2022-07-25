@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bootcamp.MS_Transactions.model.Transactions;
+import com.bootcamp.MS_Transactions.Entity.Pay;
+import com.bootcamp.MS_Transactions.Entity.TraBootCoin;
 import com.bootcamp.MS_Transactions.Entity.Transfer;
 import com.bootcamp.MS_Transactions.interfaces.SetType;
 import com.bootcamp.MS_Transactions.repository.TransactionRepository;
@@ -210,6 +212,73 @@ public class TransactionServiceImpl implements TransactionService{
 		Tra.setCardNumber(numDebitCard);
 		
 		return RegTra(Tra,4);
+	}
+
+	@Override
+	public Mono<Transactions> Send_Pay(Pay payO) {
+		LogJava.info("Send Pay");
+		
+		Transactions Tra = new Transactions();
+		Tra.setAmount(payO.getAmount());
+		Tra.setCodClient(payO.getCodClient());
+		Tra.setCodNoClient(payO.getCodNoClient());
+		Tra.setPhone_Number(payO.getPhone_Number());
+		Tra.setDateCreate(new Date());
+		
+		return RegTra(Tra,6);
+		
+	}
+
+	@Override
+	public Mono<Transactions> Rece_Pay(Pay payO) {
+		LogJava.info("Send Pay");
+		
+		Transactions Tra = new Transactions();
+		Tra.setAmount(payO.getAmount());
+		Tra.setCodClient(payO.getCodClient());
+		Tra.setCodNoClient(payO.getCodNoClient());
+		Tra.setPhone_Number(payO.getPhone_Number());
+		Tra.setDateCreate(new Date());
+		
+		return RegTra(Tra,7);
+		
+	}
+
+	@Override
+	public Mono<Transactions> Buy_BootCoin(TraBootCoin tBC) {
+		LogJava.info("Buy BootCoin");
+		
+		Transactions Tra = new Transactions();
+		
+		Tra.setAmount(tBC.getAmount());
+		Tra.setCodClient(tBC.getCodClient());
+		Tra.setCurrency("03");
+		Tra.setDateCreate(new Date());
+		Tra.setNumber(tBC.getNumber());
+		Tra.setProduct(tBC.getProduct());
+		
+		Tra= OpeOurEntity(Tra);
+		
+		return RegTra(Tra,8);
+	}
+
+	@Override
+	public Mono<Transactions> Sold_BootCoin(TraBootCoin tBC) {
+		LogJava.info("Sold BootCoin");
+		
+		Transactions Tra = new Transactions();
+		
+		Tra.setAmount(tBC.getAmount());
+		Tra.setCodClient(tBC.getCodClient());
+		Tra.setCurrency("03");
+		Tra.setDateCreate(new Date());
+		Tra.setNumber(tBC.getNumber());
+		Tra.setProduct(tBC.getProduct());
+		
+		Tra= OpeOurEntity(Tra);
+		
+		return RegTra(Tra,9);
+		
 	}
 
 	

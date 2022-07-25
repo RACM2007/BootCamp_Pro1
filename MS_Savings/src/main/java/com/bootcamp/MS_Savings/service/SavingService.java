@@ -31,6 +31,8 @@ public interface SavingService {
 	
 	public Mono<Savings> AmountUpdate(String pro, String Currency, String Number,double NewAmou) throws Exception;
 	
+	public Mono<Savings> GetAccountOrden(String DebitCardNumber, double Amount);
+	
 	public Map<String,Object> SavReport();
 	
 	public Map<String,Object> SavReportByProduct(String pro);

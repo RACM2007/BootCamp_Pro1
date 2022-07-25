@@ -67,6 +67,26 @@ public class SavingServiceImpl implements SavingService{
 		
 	}
 	
+	@Override
+	public Mono<Savings> GetAccountOrden(String DebitCardNumber, double Amount) {
+		
+		//Find Codcli
+		String codcli= debit_CardService.GetCodCli(DebitCardNumber);
+				
+		//Find Accounts
+		List<Accounts_Relationship> FSav = accounts_RelationshipService.GetAccountSavList(codcli);
+		
+		for (Accounts_Relationship Savc:FSav) {
+			if (Amount <= Inquiry(Savc.getProduct(), Savc.getCurrency(), Savc.getNumber()).block()) {
+				return savingRepository.findAll().filter(x -> x.getProduct().equals(Savc.getProduct())
+						&& x.getCurrency().equals(Savc.getCurrency())
+						&& x.getNumber().equals(Savc.getNumber())).next();
+			}
+		}
+		
+		 return null;
+	}
+	
 	public Savings GetSavingByProCurNum (String Product, String Currency, String Number){
 		Savings Obj1 = savingRepository.findAll().filter(x -> x.getProduct().equals(Product)
 				&& x.getCurrency().equals(Currency)
@@ -376,5 +396,6 @@ public class SavingServiceImpl implements SavingService{
 		return savingRepository.delete(Sav);
 	}
 
+	
 			
 }

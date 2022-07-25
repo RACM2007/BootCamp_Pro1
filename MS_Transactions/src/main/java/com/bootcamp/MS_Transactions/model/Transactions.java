@@ -25,6 +25,7 @@ public class Transactions  implements Serializable  {
 	private String Currency;
 	private String Number;
 	private String CodClient;
+	private String CodNoClient;
 	private double Amount;
 	private Date DateCreate;
 	
@@ -36,5 +37,7 @@ public class Transactions  implements Serializable  {
 
 	
 	private String CodEntity;
+	
+	private String Phone_Number;
 	
 }

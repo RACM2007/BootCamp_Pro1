@@ -7,3 +7,8 @@
 [2022-07-19 11:58:59] [ INFO ] [TransactionServiceImpl:44] Make a Deposit
 [2022-07-19 12:14:02] [ INFO ] [TransactionServiceImpl:44] Make a Deposit
 [2022-07-19 12:39:15] [ INFO ] [TransactionServiceImpl:44] Make a Deposit
+[2022-07-25 16:41:15] [ INFO ] [TransactionServiceImpl:267] Sold BootCoin
+[2022-07-25 16:43:25] [ INFO ] [TransactionServiceImpl:267] Sold BootCoin
+[2022-07-25 16:45:06] [ INFO ] [TransactionServiceImpl:249] Buy BootCoin
+[2022-07-25 16:45:20] [ INFO ] [TransactionServiceImpl:249] Buy BootCoin
+[2022-07-25 17:48:07] [ INFO ] [TransactionServiceImpl:219] Send Pay
