@@ -19,6 +19,8 @@ import com.bootcamp.MS_Transactions.events.BootCoinCreatedEvent;
 import com.bootcamp.MS_Transactions.events.Event;
 import com.bootcamp.MS_Transactions.events.PayCreatedEvent;
 
+// DESERIALIZAR
+
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {
@@ -41,8 +43,6 @@ public class KafkaConsumerConfig {
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deserializer);
         
-        //return new DefaultKafkaConsumerFactory<>(config);
-        
         return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), deserializer);
 	
     }
@@ -56,8 +56,6 @@ public class KafkaConsumerConfig {
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
-	
-	////////////////////////////////////////////////////
 	
 	@Bean
     public ConsumerFactory<String, PayCreatedEvent> consumerFactory2() {
@@ -74,8 +72,6 @@ public class KafkaConsumerConfig {
         config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deserializer);
-        
-        //return new DefaultKafkaConsumerFactory<>(config);
         
         return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), deserializer);
 	

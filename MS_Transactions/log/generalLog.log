@@ -12,3 +12,5 @@
 [2022-07-25 16:45:06] [ INFO ] [TransactionServiceImpl:249] Buy BootCoin
 [2022-07-25 16:45:20] [ INFO ] [TransactionServiceImpl:249] Buy BootCoin
 [2022-07-25 17:48:07] [ INFO ] [TransactionServiceImpl:219] Send Pay
+[2022-07-26 11:18:17] [ INFO ] [TransactionServiceImpl:249] Buy BootCoin
+[2022-07-26 11:19:28] [ INFO ] [TransactionServiceImpl:267] Sold BootCoin

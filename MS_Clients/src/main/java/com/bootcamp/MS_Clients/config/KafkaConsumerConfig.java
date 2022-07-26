@@ -16,7 +16,7 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import com.bootcamp.MS_Clients.events.ClientCreatedEvent;
-
+// DESERIALIZAR
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {
@@ -26,7 +26,7 @@ public class KafkaConsumerConfig {
 	@Bean
     public ConsumerFactory<String, ClientCreatedEvent> consumerFactory() {
 		Map<String, Object> config = new HashMap<>();
-        
+        //2.2 error de tipo headers
 		JsonDeserializer<ClientCreatedEvent> deserializer = new JsonDeserializer<>(ClientCreatedEvent.class);
         deserializer.setRemoveTypeHeaders(false);
         deserializer.addTrustedPackages("*");
@@ -42,7 +42,7 @@ public class KafkaConsumerConfig {
         return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), deserializer);
 	
     }
-	
+	//crear template para utilizar el consumer
 	@Bean
     public ConcurrentKafkaListenerContainerFactory<String, ClientCreatedEvent>
     kafkaListenerContainerFactory() {

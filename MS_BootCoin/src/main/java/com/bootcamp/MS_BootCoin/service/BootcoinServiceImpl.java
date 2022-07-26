@@ -48,6 +48,9 @@ public class BootcoinServiceImpl implements BootcoinService {
 	
 	@Autowired
 	private KafkaTemplate<String, Event<?>> producer;
+
+	@Autowired
+	private MSClientKafRedis msClientKafRedis;
 	
 	@Value("${topic.customer.name:bootcoinT}")
 	private String topicBootcoin;
@@ -66,7 +69,7 @@ public class BootcoinServiceImpl implements BootcoinService {
 	@Override
 	public Mono<BootCoin> Inquiry() {
 		AggregationResults<BootCoin> resultsAll = ResultAll();
-		
+
 		Mono<BootCoin> Mbc;
 		
 		try {
@@ -84,21 +87,16 @@ public class BootcoinServiceImpl implements BootcoinService {
 		Aggregation aggregationAll = Aggregation.newAggregation(sortOperation);
 		AggregationResults<BootCoin> resultsAll =
 				mongoTemplate.aggregate(aggregationAll,"BootCoin", BootCoin.class);
-		
 		return resultsAll;
 	}
 
 	@Override
 	public Flux<BootCoin> InquiryAll() {
-		return bootcoinRepository.findAll().map(x -> {
-			log.info("Previous value {}",redisTemplate.opsForHash().get("listAll","name"));
-			redisTemplate.opsForHash().put("listAll","name", x);
-			return x;
-		});	
+		return bootcoinRepository.findAll();
 	}
 
 	@Override
-	public String Registry_User_Cli(Clients cli) {
+	public String RegistryUser_Cli(Clients cli) {
 		
 		MSClientKaf MS = new MSClientKaf();
 		
@@ -112,20 +110,20 @@ public class BootcoinServiceImpl implements BootcoinService {
 		created.setType(EventType.CREATED);
 		created.setDate(new Date());
 		
-		//this.producer.send(topicBootcoin,created);
-		
 		Message<Event> message = MessageBuilder
 	            .withPayload(created)
 	            .setHeader(KafkaHeaders.TOPIC, topicBootcoin)
 	            .build();
+
+		msClientKafRedis.Save_Client_Redis(cli.getCodClient(), MS);
 		
 	    this.producer.send(message);
 		
-		return "Usuario Registrado";
+		return "Usuario Registrado Client";
 	}
 
 	@Override
-	public String Registry_User_NoCli(NoClients Ncli) {
+	public String RegistryUser_NoCli(NoClients Ncli) {
 		MSClientKaf MS = new MSClientKaf();
 		
 		MS.setIsclient(false);
@@ -138,16 +136,16 @@ public class BootcoinServiceImpl implements BootcoinService {
 		created.setType(EventType.CREATED);
 		created.setDate(new Date());
 		
-		//this.producer.send(topicBootcoin,created);
-		
 		Message<Event> message = MessageBuilder
 	            .withPayload(created)
 	            .setHeader(KafkaHeaders.TOPIC, topicBootcoin)
 	            .build();
+
+		msClientKafRedis.Save_Client_Redis(Ncli.getCodNoClient(), MS);
 		
 	    this.producer.send(message);
 		
-		return "Usuario Registrado";
+		return "Usuario Registrado No Client";
 	}
 
 	@Override
@@ -162,8 +160,6 @@ public class BootcoinServiceImpl implements BootcoinService {
 		created.setId(UUID.randomUUID().toString());
 		created.setType(EventType.CREATED);
 		created.setDate(new Date());
-		
-		//this.producer.send(topicBootcoin,created);
 		
 		Message<Event> message = MessageBuilder
 	            .withPayload(created)
@@ -200,7 +196,5 @@ public class BootcoinServiceImpl implements BootcoinService {
 		
 		return "Venta Registrada";
 	}
-
-	
 	
 }

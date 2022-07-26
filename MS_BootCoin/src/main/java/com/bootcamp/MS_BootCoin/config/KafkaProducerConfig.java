@@ -18,7 +18,8 @@ import com.bootcamp.MS_BootCoin.util.Event;
 public class KafkaProducerConfig {
 
 	private final String bootstrapAddress = "localhost:9092";
-	
+
+	//Serializar
 	@Bean
 	public ProducerFactory<String, Event<?>> producerFactory(){
 		Map<String, Object> configProps = new HashMap<>();

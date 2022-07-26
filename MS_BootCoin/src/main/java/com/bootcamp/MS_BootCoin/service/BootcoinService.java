@@ -16,9 +16,9 @@ public interface BootcoinService {
 
 	Flux<BootCoin> InquiryAll();
 
-	String Registry_User_Cli(Clients cli);
+	String RegistryUser_Cli(Clients cli);
 	
-	String Registry_User_NoCli(NoClients Ncli);
+	String RegistryUser_NoCli(NoClients Ncli);
 
 	String Buy_BootCoin(TraBootCoin tBC);
 

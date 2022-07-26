@@ -28,57 +28,49 @@ public class BootcoinController {
 	@Autowired
     BootcoinService bootcoinService;
 	
-	@PostMapping(value = "/CurrencyChange/{newchange}")
-    public Mono<BootCoin> Currency_Change(@PathVariable("newchange") double Newchange) {
-        //List all Commissions
-        return bootcoinService.Currency_Change(Newchange);
+	@PostMapping(value = "/CurrencyChange/{newvalue}")
+    public Mono<BootCoin> Currency_Change(@PathVariable("newvalue") double NewValue) {
+        //List all CurrencyChange
+        return bootcoinService.Currency_Change(NewValue);
     }
 	
 	@GetMapping(value = "/Inquiry")
     public Mono<BootCoin> Inquiry() {
-        //List all Commissions
+        //List all Inquiry
         return bootcoinService.Inquiry();
     }
 	
 	@GetMapping(value = "/InquiryAll")
     public Flux<BootCoin> InquiryAll() {
-        //List all Commissions
+        //List all InquiryAll
         return bootcoinService.InquiryAll();
     }
 	
-	@PostMapping(value = "/RegistryUser/{isClient}")
-    public String Registry_User(@PathVariable("isClient") int isClient, @RequestBody UserBC uBC) {
-        //Registry User
+	@PostMapping(value = "/RegistryUserC/{value}")
+    public String Registry_User(@PathVariable("value") int isValue, @RequestBody UserBC uBC) {
+
+        //Registry User, 1 = Client, 2 = No Client
 		
-		if (isClient==1) {
+		if (isValue==1) {
 			Clients cli = uBC.toClient();
-			return bootcoinService.Registry_User_Cli(cli);
-			
+			return bootcoinService.RegistryUser_Cli(cli);
 		}else {
 			NoClients Ncli = uBC.toNoClient();
-			return bootcoinService.Registry_User_NoCli(Ncli);
+			return bootcoinService.RegistryUser_NoCli(Ncli);
 		}
 		
     }
 	
 	@PostMapping(value = "/BuyBootCoin")
     public String Buy_BootCoin(@RequestBody TraBootCoin TBC) {
-        //List all Commissions
+        //Buy BuyBootCoin
         return bootcoinService.Buy_BootCoin(TBC);
     }
 	
 	@PostMapping(value = "/SoldBootCoin")
     public String Sold_BootCoin(@RequestBody TraBootCoin TBC) {
-        //List all Commissions
+        //Sold BuyBootCoin
         return bootcoinService.Sold_BootCoin(TBC);
-    }
-	
-	
-	
-	@GetMapping(value = "/Check_user")
-    public Mono<BootCoin> Check_user() {
-        //List all Commissions
-        return bootcoinService.Inquiry();
     }
 	
 }

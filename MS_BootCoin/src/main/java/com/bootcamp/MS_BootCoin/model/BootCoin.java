@@ -22,7 +22,6 @@ public class BootCoin implements Serializable {
     private ObjectId id;
 	
 	private double Currency_Sol_Change;
-    private Date DateCreate
-;
+    private Date DateCreate;
 	
 }
