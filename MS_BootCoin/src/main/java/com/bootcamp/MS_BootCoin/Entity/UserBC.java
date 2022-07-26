@@ -4,17 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @AllArgsConstructor @NoArgsConstructor
+@Data 
+@AllArgsConstructor 
+@NoArgsConstructor
 public class UserBC {
 
 	private String CodClient;
     private String Name;
     private String Address;
     private String Document;
-    
     private int FlgActive;
     private int Type;
-    
     private String Number;
     private String CellImei;
     private String Mail;
@@ -31,7 +31,6 @@ public class UserBC {
     	c.setType(Type);
     	
     	return c;
-    	
     }
     
     public NoClients toNoClient() {
@@ -45,7 +44,6 @@ public class UserBC {
     	c.setDocument(Document);
     	
     	return c;
-    	
     }
     
 }

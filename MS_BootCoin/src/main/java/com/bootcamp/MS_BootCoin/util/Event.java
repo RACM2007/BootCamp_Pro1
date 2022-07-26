@@ -11,5 +11,4 @@ public abstract class Event <T> {
 	private Date date;
 	private EventType type;
 	private T data;
-	
 }

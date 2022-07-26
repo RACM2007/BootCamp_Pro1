@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -121,7 +120,7 @@ public class BootcoinServiceImpl implements BootcoinService {
 		
 	    this.producer.send(message);
 		
-		return "Usuario Registrado";
+		return "Registered User";
 	}
 
 	@Override
@@ -147,7 +146,7 @@ public class BootcoinServiceImpl implements BootcoinService {
 		
 	    this.producer.send(message);
 		
-		return "Usuario Registrado";
+		return "Registered User";
 	}
 
 	@Override
@@ -162,9 +161,7 @@ public class BootcoinServiceImpl implements BootcoinService {
 		created.setId(UUID.randomUUID().toString());
 		created.setType(EventType.CREATED);
 		created.setDate(new Date());
-		
-		//this.producer.send(topicBootcoin,created);
-		
+				
 		Message<Event> message = MessageBuilder
 	            .withPayload(created)
 	            .setHeader(KafkaHeaders.TOPIC, topicBootcoin)
@@ -172,7 +169,7 @@ public class BootcoinServiceImpl implements BootcoinService {
 		
 	    this.producer.send(message);
 		
-		return "Compra Registrada";
+		return "Registered Purchase";
 	}
 
 	@Override
@@ -188,9 +185,7 @@ public class BootcoinServiceImpl implements BootcoinService {
 		created.setId(UUID.randomUUID().toString());
 		created.setType(EventType.CREATED);
 		created.setDate(new Date());
-		
-		//this.producer.send(topicBootcoin,created);
-		
+				
 		Message<Event> message = MessageBuilder
 	            .withPayload(created)
 	            .setHeader(KafkaHeaders.TOPIC, topicBootcoin)
@@ -198,7 +193,7 @@ public class BootcoinServiceImpl implements BootcoinService {
 		
 	    this.producer.send(message);
 		
-		return "Venta Registrada";
+		return "Registered Sale";
 	}
 
 	
