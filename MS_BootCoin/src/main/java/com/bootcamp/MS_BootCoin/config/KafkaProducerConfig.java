@@ -17,7 +17,10 @@ import com.bootcamp.MS_BootCoin.util.Event;
 @Configuration
 public class KafkaProducerConfig {
 
+	//IP Kafka Server
 	private final String bootstrapAddress = "localhost:9092";
+	
+	//kafka configuration
 	
 	@Bean
 	public ProducerFactory<String, Event<?>> producerFactory(){

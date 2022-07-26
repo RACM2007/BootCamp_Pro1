@@ -34,7 +34,7 @@ public class BootcoinController {
 	
 	@GetMapping(value = "/Inquiry")
     public Mono<BootCoin> Inquiry() {
-        //List all Commissions
+        //List last Commissions
         return bootcoinService.Inquiry();
     }
 	
@@ -47,7 +47,6 @@ public class BootcoinController {
 	@PostMapping(value = "/RegistryUser/{isClient}")
     public String Registry_User(@PathVariable("isClient") int isClient, @RequestBody UserBC uBC) {
         //Registry User
-		
 		if (isClient==1) {
 			Clients cli = uBC.toClient();
 			return bootcoinService.Registry_User_Cli(cli);
